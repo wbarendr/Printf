@@ -13,7 +13,7 @@
 NAME = libftprintf.a
 
 SRCS =	ft_atoi ft_putnbr_fd printf printf_utils ft_digit ft_pointer \
-		ft_print_x ft_unsigned
+		ft_hexa ft_unsigned ft_hexa_cap 
 
 CFILES	= $(SRCS:%=%.c)
 OFILES	= $(SRCS:%=%.o)

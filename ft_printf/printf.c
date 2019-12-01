@@ -29,9 +29,9 @@ void		found_type(const char **s, va_list *args, t_flags *flags, int *co)
     else if ((*s)[0] == 'u')
         ft_unsigned(args, flags, co);
 	else if ((*s)[0] == 'x')
-        ft_x(args, flags, co);
+        ft_hexa(args, flags, co);
     else if ((*s)[0] == 'X')
-        ft_x_cap(args, flags, co);
+        ft_hexa_cap(args, flags, co);
     else if ((*s)[0] == 'p')
         ft_pointer(args, flags, co);
     (*s)++; 
@@ -51,26 +51,26 @@ int         find_type(char c)
 void            find_flags(const char **s, t_flags *flags)
 {
 	if ((*s)[0] == '0')
-            flags->zero = '0';
+        flags->zero = '0';
     else if ((*s)[0] == '-')
-            flags->minus = 1;
+        flags->minus = 1;
     else if ((*s)[0] == ' ')
-            flags->space = 1;
+        flags->space = 1;
     else if ((*s)[0] == '+')
-            flags->plus = 1;
-    else if (*s[0] == 'l' && *s[1] != 'l')
-            flags->l = 1;
-    else if (*s[0] == 'l' && *s[1] == 'l')
+        flags->plus = 1;
+    if ((*s)[0] == 'l' && (*s)[1] != 'l')
+        flags->l = 1;
+    if ((*s)[0] == 'l' && (*s)[1] == 'l')
         flags->ll = 1;
-    else if (*s[0] == 'h' && *s[1] != 'h')
+    else if ((*s)[0] == 'h' && (*s)[1] != 'h')
         flags->h = 1;
-    else if (*s[0] == 'h' && *s[1] == 'h')
+    else if ((*s)[0] == 'h' && (*s)[1] == 'h')
 		flags->hh = 1;
-	if ((*s[0] == 'h' && *s[1] == 'h') || (*s[0] == 'l' && *s[1] == 'l'))
-		(*s)++; 
-    else if (*s[0] == '*')
+	if (((*s)[0] == 'h' && (*s)[1] == 'h') || ((*s)[0] == 'l' && (*s)[1] == 'l'))
+		(*s)++;
+    if ((*s)[0] == '*')
         flags->star = 1;
-	else if (*s[0] == '#')
+	else if ((*s)[0] == '#')
         flags->hash = 1;
 }
 
@@ -129,44 +129,47 @@ int 		ft_printf(const char *s, ...)
     va_end(args);
     return (co);
 }
- /*
+
+
 int				main(void)
 {
     char l;
 	char str[] = "I like turtles";
-    int i;
+    short i;
     char *ptr;
 
-    i = 5732;
+    i = 5730;
     l = 'x';
     ptr = "hello";
     //setlocale(LC_ALL, "en_US");
-    printf("%d\n", printf("char: %c\nstring: %.*s \n", l, 5, str));
+ /*     printf("%d\n", printf("char: %c\nstring: %.*s \n", l, 5, str));
     printf("%d\n", ft_printf("char: %c\nstring: %.*s \n", l, 5, str));
     printf("%d\n", printf("char: %c\nstring: %*s \n", l, 5, str));
     printf("%d\n", ft_printf("char: %c\nstring: %*s \n", l, 5, str));
 
 	printf("%05%\n");
-	printf("%0.*%%6c\n", 5, l);
 	ft_printf("%05%\n");
-	ft_printf("%0.*%%c\n", 5, l);
+	printf("%0.*%%6c\n", 5, l);
+	ft_printf("%0.*%%6c\n", 5, l);
 
     
 	printf("---%x\n", 99887766);
 	ft_printf("ft-%x\n", 99887766);
     printf("---%X\n", 99887766);
-	ft_printf("ft-%X\n", 99887766);
+	ft_printf("ft-%X\n", 99887766); */
+    printf("%hd\n", i);
+    ft_printf("%hd\n", i);
+    printf("%5.*d\n", 15, 123456789);
+    ft_printf("%5.*d\n", 15, 123456789);
+    printf("%15.*d\n", 5, 123456789);
+    ft_printf("%15.*d\n", 5, 123456789); 
 	printf("---%-15p\n", ptr);
 	ft_printf("ft-%-15p\n", ptr);
-    printf("%5.*d\n", 15, 123456789);
-    printf("%15.*d\n", 5, 123456789);
-    ft_printf("%5.*d\n", 15, 123456789);
-    ft_printf("%15.*d\n", 5, 123456789); 
     //ft_printf("%5.15d\n", 123456789);
     //ft_printf("%d\n", (ft_printf("%44c\n", l)));
     return (0);
 }
-
+/*
  	printf("   %-0*%  %-+5d\n", 2, 99);
 	ft_printf("ft %-0*%  %-+5d\n", 2, 99);
 	printf("   %  -0*%  %-+5d\n", 15, 99);

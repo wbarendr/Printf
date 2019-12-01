@@ -1,6 +1,6 @@
 #include "printf.h"
 
-void            ft_x_cap(va_list *args, t_flags *flags, int *co)
+void            ft_hexa_cap(va_list *args, t_flags *flags, int *co)
 {
     int         num;
     int         save_num;
@@ -24,10 +24,10 @@ void            ft_x_cap(va_list *args, t_flags *flags, int *co)
         ft_putchar('+');
     if (num < 0)
         ft_putchar('-');
-    print_x_cap(flags, num, j, co);
+    print_hexa_cap(flags, num, j, co);
 }
 
-void            print_x_cap(t_flags *flags, int num, int j, int *co)
+void            print_hexa_cap(t_flags *flags, int num, int j, int *co)
 {
     int i;
 
