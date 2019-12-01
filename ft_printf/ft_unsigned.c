@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <unistd.h>
-#include <stdarg.h>
 
 void            ft_unsigned(va_list *args, t_flags *flags, int *co)
 {
@@ -26,7 +24,7 @@ void            ft_unsigned(va_list *args, t_flags *flags, int *co)
     if (flags->dot == 1)
         flags->zero = '0';
     num = va_arg(*args, int);
-    if (flags->space && num >= 0)
+    if (flags->space)
         ft_putchar(' ');
     save_num = num;
     while (save_num / 10)
@@ -34,8 +32,6 @@ void            ft_unsigned(va_list *args, t_flags *flags, int *co)
         save_num = save_num / 10;
         j++;
     }
-    if (num < 0)
-        j--;
     print_digit(flags, num, j, co);
 }
 
@@ -44,11 +40,9 @@ void            print_unsigned(t_flags *flags, unsigned int num, int j, int *co)
     int i;
 
     i = 0;
-    if (num >= 0 && flags->plus == 1)
+    if (flags->plus == 1)
         ft_putchar('+');
-    if (num < 0)
-        ft_putchar('-');
-    if (num < 0 || flags->plus == 1)
+    if (flags->plus == 1)
         i++;
     if (flags->minus == 0)
         while (i < (flags->num - j))

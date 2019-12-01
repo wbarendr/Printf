@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <unistd.h>
 #include "printf.h"
-#include <locale.h>
+//#include <locale.h>  
 
 void		found_type(const char **s, va_list *args, t_flags *flags, int *co)
 {
@@ -29,13 +28,12 @@ void		found_type(const char **s, va_list *args, t_flags *flags, int *co)
         ft_digit(args, flags, co);
     else if ((*s)[0] == 'u')
         ft_unsigned(args, flags, co);
-  /*  else if ((*s)[0] == 'p')
-        ft_p(args, flags);
 	else if ((*s)[0] == 'x')
-        ft_x(args, flags);
+        ft_x(args, flags, co);
     else if ((*s)[0] == 'X')
-        ft_X(args, flags) */;
-    //ft_bonus((*s)[0], args, flags);
+        ft_x_cap(args, flags, co);
+    else if ((*s)[0] == 'p')
+        ft_pointer(args, flags, co);
     (*s)++; 
 }
 
@@ -120,23 +118,28 @@ int 		ft_printf(const char *s, ...)
 			s++;
 			found_percentage(&s, &args, &flags, &co);
 		}
+        else 
+        {
+		    ft_putchar((char)s[0]);
+            co++;
+		    s++;
+        }
         flags = ft_flags();
-		ft_putchar((char)s[0]);
-        co++;
-		s++;
 	}
     va_end(args);
-    return (co); // check waarom je -1 doet!! 
+    return (co);
 }
- 
+ /*
 int				main(void)
 {
     char l;
 	char str[] = "I like turtles";
     int i;
+    char *ptr;
 
     i = 5732;
     l = 'x';
+    ptr = "hello";
     //setlocale(LC_ALL, "en_US");
     printf("%d\n", printf("char: %c\nstring: %.*s \n", l, 5, str));
     printf("%d\n", ft_printf("char: %c\nstring: %.*s \n", l, 5, str));
@@ -144,19 +147,26 @@ int				main(void)
     printf("%d\n", ft_printf("char: %c\nstring: %*s \n", l, 5, str));
 
 	printf("%05%\n");
-	printf("%0.*%%c\n", 5, l);
+	printf("%0.*%%6c\n", 5, l);
 	ft_printf("%05%\n");
 	ft_printf("%0.*%%c\n", 5, l);
 
-   /*  printf("%5.*d\n", 15, 123456789);
+    
+	printf("---%x\n", 99887766);
+	ft_printf("ft-%x\n", 99887766);
+    printf("---%X\n", 99887766);
+	ft_printf("ft-%X\n", 99887766);
+	printf("---%-15p\n", ptr);
+	ft_printf("ft-%-15p\n", ptr);
+    printf("%5.*d\n", 15, 123456789);
     printf("%15.*d\n", 5, 123456789);
     ft_printf("%5.*d\n", 15, 123456789);
-    ft_printf("%15.*d\n", 5, 123456789); */
+    ft_printf("%15.*d\n", 5, 123456789); 
     //ft_printf("%5.15d\n", 123456789);
     //ft_printf("%d\n", (ft_printf("%44c\n", l)));
     return (0);
 }
-/*
+
  	printf("   %-0*%  %-+5d\n", 2, 99);
 	ft_printf("ft %-0*%  %-+5d\n", 2, 99);
 	printf("   %  -0*%  %-+5d\n", 15, 99);

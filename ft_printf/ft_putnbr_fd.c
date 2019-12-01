@@ -11,14 +11,11 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <unistd.h>
-#include <stdio.h>
 
 void	ft_putnbr_fd(long long n, int fd, int *i)
 {
 	char c;
 
-	//printf("nujm: %lld\n", n);
 	if (n < 0)
 		n = n * -1;
 	if (n < 10)
@@ -30,4 +27,56 @@ void	ft_putnbr_fd(long long n, int fd, int *i)
 	}
 	ft_putnbr_fd((n / 10), fd, i);
 	ft_putnbr_fd((n % 10), fd, i);
+}
+
+void	ft_putnbr_base(long long n, int fd, int *i)
+{
+	char c;
+	int k;
+
+	k = 10;
+	if (n < 0)
+		n = n * -1;
+	if (n < 16)
+	{
+		if (n > 9)
+		{
+			while (k != n)
+				k++;
+			c = 'a' + (k - 10);
+		}
+		else 
+			c = n + 48;
+		write(1, &c, 1);
+		(*i)++;
+		return ;
+	}
+	ft_putnbr_base((n / 16), fd, i);
+	ft_putnbr_base((n % 16), fd, i);
+}
+
+void	ft_putnbr_base_cap(long long n, int fd, int *i)
+{
+	char c;
+	int k;
+
+	k = 10;
+	if (n < 0)
+		n = n * -1;
+	if (n < 16)
+	{
+		if (n > 9)
+		{
+			while (k != n)
+				k++;
+			c = 'A' + (k - 10);
+		}
+		else 
+			c = n + 48;
+		write(1, &c, 1);
+		(*i)++;
+		return ;
+	}
+	ft_putnbr_base_cap((n / 16), fd, i);
+	ft_putnbr_base_cap((n % 16), fd, i);
 }

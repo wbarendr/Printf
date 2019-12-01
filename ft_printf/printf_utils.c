@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <unistd.h>
-#include <stdarg.h>
 
 t_flags         ft_flags(void)
 {
