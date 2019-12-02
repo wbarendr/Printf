@@ -6,13 +6,12 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/30 19:09:31 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/11/30 21:27:19 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/02 22:12:57 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include <stdio.h>
-
 long long          check_type(va_list * args, t_flags *flags)
 {
     long long num;
@@ -32,6 +31,14 @@ long long          check_type(va_list * args, t_flags *flags)
     return (num);
 }
 
+void            print_sign(long long num, t_flags *flags)
+{
+    if (num >= 0 && flags->plus == 1)
+        ft_putchar('+');
+    if (num < 0)
+        ft_putchar('-');
+}
+
 void            ft_digit(va_list *args, t_flags *flags, int *co)
 {
     long long     num;
@@ -39,7 +46,16 @@ void            ft_digit(va_list *args, t_flags *flags, int *co)
     int           j;
 
     j = 1;
-    if (flags->star == 1)
+   if (flags->star == 1)
+    {
+        flags->num = va_arg(*args, int);
+        if (flags->num < 0)
+        {
+            flags->minus = 1;
+            flags->num = flags->num * -1;
+        }
+    }
+    if (flags->stardot == 1)
         flags->dotnum = va_arg(*args, int);
     num = check_type(args, flags);
     if (flags->space && num >= 0)
@@ -50,39 +66,44 @@ void            ft_digit(va_list *args, t_flags *flags, int *co)
         save_num = save_num / 10;
         j++;
     }
-    if (num < 0)
-        j--;
-    if (num >= 0 && flags->plus == 1)
-        ft_putchar('+');
-    if (num < 0)
-        ft_putchar('-');
+    //if (num < 0)
+    //    j--;
+    if (flags->dot == 0 && flags->zero == '0')
+        print_sign(num, flags);
     print_digit(flags, num, j, co);
 }
 
 void            print_digit(t_flags *flags, long long num, int j, int *co)
 {
     int i;
+    int k;
 
+    k = 0;
     i = 0;
     if (num < 0 || flags->plus == 1)
         i++;
     if (flags->minus == 0)
-        while (i < (flags->num - j))
+        while (i < (flags->num - j) && i < (flags->num - flags->dotnum))
         {
             write(1, &flags->zero, 1);
             i++;
         }
-    while (i < flags->dotnum - j)
+    if (flags->dot == 1 || flags->zero == ' ')
+        print_sign(num, flags);
+    while (k < flags->dotnum - j)
     {
         ft_putchar('0');
+        k++;
         i++;
     }
-    ft_putnbr_fd(num, 1, &i);
+    //printf("dotnum: %d\n", flags->dotnum);
+    if (flags->dotnum != 0 || flags->num != 0 || num != 0)
+        ft_putnbr_fd(num, 1, &i);
     if (flags->minus == 1)
         while (i < flags->num)
         {
             ft_putchar(' ');
             i++;
         }
-    (*co) = (*co) + i + j;
+    (*co) = (*co) + i;
 }

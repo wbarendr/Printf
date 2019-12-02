@@ -6,7 +6,7 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/04 16:11:55 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/11/30 20:32:24 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/02 14:14:31 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	ft_putnbr_fd(long long n, int fd, int *i)
 	ft_putnbr_fd((n % 10), fd, i);
 }
 
-void	ft_putnbr_base(long long n, int fd, int *i)
+void	ft_putnbr_base(unsigned int n, int fd, int *i)
 {
 	char c;
-	int k;
+	unsigned int k;
 
 	k = 10;
 	if (n < 0)
@@ -55,10 +55,10 @@ void	ft_putnbr_base(long long n, int fd, int *i)
 	ft_putnbr_base((n % 16), fd, i);
 }
 
-void	ft_putnbr_base_cap(long long n, int fd, int *i)
+void	ft_putnbr_base_cap(unsigned int n, int fd, int *i)
 {
 	char c;
-	int k;
+	unsigned int k;
 
 	k = 10;
 	if (n < 0)

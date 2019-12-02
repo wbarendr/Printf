@@ -6,7 +6,7 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 15:31:42 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/11/30 22:47:44 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/02 22:21:33 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void		found_type(const char **s, va_list *args, t_flags *flags, int *co)
 {
+    if (flags->dot == 1)
+        flags->zero = ' ';
 	if ((*s)[0] == 'c')
         ft_char(args, flags, co);
     else if ((*s)[0] == 's')
@@ -88,13 +90,14 @@ void			found_percentage(const char **s, va_list *args, t_flags *flags, int *co)
         else if (*s[0] == '.')
 		{
             flags->dot = 1;
-			if ((*s)[1] >= '0' && (*s)[1] <= '9')
-			{
-				(*s)++;
+            if ((*s)[1] == '*' || ((*s)[1] >= '0' && (*s)[1] <= '9')) 
+			    (*s)++;
+            if ((*s)[0] == '*')
+                flags->stardot = 1;
+			else if ((*s)[0] >= '0' && (*s)[0] <= '9')
 				flags->dotnum = ft_atoi(*s);
-            	while ((*s)[1] >= '0' && (*s)[1] <= '9')
-                	(*s)++;
-			}
+            while ((*s)[1] >= '0' && (*s)[1] <= '9')
+                (*s)++;
 		}
         (*s)++;
     }
@@ -130,72 +133,12 @@ int 		ft_printf(const char *s, ...)
     return (co);
 }
 
-
+/* 
+       
 int				main(void)
 {
-    char l;
-	char str[] = "I like turtles";
-    short i;
-    char *ptr;
-
-    i = 5730;
-    l = 'x';
-    ptr = "hello";
-    //setlocale(LC_ALL, "en_US");
- /*     printf("%d\n", printf("char: %c\nstring: %.*s \n", l, 5, str));
-    printf("%d\n", ft_printf("char: %c\nstring: %.*s \n", l, 5, str));
-    printf("%d\n", printf("char: %c\nstring: %*s \n", l, 5, str));
-    printf("%d\n", ft_printf("char: %c\nstring: %*s \n", l, 5, str));
-
-	printf("%05%\n");
-	ft_printf("%05%\n");
-	printf("%0.*%%6c\n", 5, l);
-	ft_printf("%0.*%%6c\n", 5, l);
-
-    
-	printf("---%x\n", 99887766);
-	ft_printf("ft-%x\n", 99887766);
-    printf("---%X\n", 99887766);
-	ft_printf("ft-%X\n", 99887766); */
-    printf("%hd\n", i);
-    ft_printf("%hd\n", i);
-    printf("%5.*d\n", 15, 123456789);
-    ft_printf("%5.*d\n", 15, 123456789);
-    printf("%15.*d\n", 5, 123456789);
-    ft_printf("%15.*d\n", 5, 123456789); 
-	printf("---%-15p\n", ptr);
-	ft_printf("ft-%-15p\n", ptr);
-    //ft_printf("%5.15d\n", 123456789);
-    //ft_printf("%d\n", (ft_printf("%44c\n", l)));
-    return (0);
-}
-/*
- 	printf("   %-0*%  %-+5d\n", 2, 99);
-	ft_printf("ft %-0*%  %-+5d\n", 2, 99);
-	printf("   %  -0*%  %-+5d\n", 15, 99);
-	ft_printf("ft %  -0*%  %-+5d\n", 15, 99);
-	printf("   % *%  %-+5d\n", 2, 99);
-	ft_printf("ft % *%  %-+5d\n", 2, 99);
-	printf("   % +  %  %-+5d\n", 99);
-    ft_printf("ft % +  %  %-+5d\n", 99);
-    printf("   %-+5d\n", i);
-    ft_printf("ft %-+5d\n", i);
-    printf("   %-5d\n", i);
-    ft_printf("ft %-5d\n", i);
-    printf("   %-+5d\n", -57);
-    ft_printf("ft %-+5d\n", -57);
-    printf("   %-5d\n", -57);
-    ft_printf("ft %-5d\n", -57);
-    //ft_printf("%d\n", i);
-    printf(":]%.2d\n", 3);
-    ft_printf(":}%.2d\n", 3);
-    printf(":]%     .*d\n", 8, -983);
-    ft_printf(":}%     .*d\n", 8, -983);
-    printf(" - %s\n", str);
-    ft_printf("---%s\n", str);
-    printf(" - %-25s\n", str);
-    ft_printf("---%-25s\n", str);
-    printf(" - %.40s\n", str);
-    ft_printf("---%.40s\n", str) ;
-    return (0);
+    ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
+    printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
+	ft_printf("taaa %100s\n", "hello");
+	printf("taaa %100s\n", "hello");
 } */

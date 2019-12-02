@@ -6,7 +6,7 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/27 14:14:06 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/11/30 20:34:13 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/02 17:31:30 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct		s_flags
 	int			dot;
 	int			star;
 	int 		dotnum;
+	int			stardot;
 }					t_flags;
 
 t_flags				ft_flags(void);
@@ -44,12 +45,13 @@ void            	print_digit(t_flags *flags, long long num, int j, int *co);
 void          		print_unsigned(t_flags *flags, unsigned int num, int j, int *co);
 void				ft_unsigned(va_list *args, t_flags *flags, int *co);
 void            	ft_hexa(va_list *args, t_flags *flags, int *co);
-void				ft_putnbr_base(long long n, int fd, int *i);
-void            	print_hexa(t_flags *flags, int num, int j, int *co);
-void           		print_hexa_cap(t_flags *flags, int num, int j, int *co);
+void				ft_putnbr_base(unsigned n, int fd, int *i);
+void            	print_hexa(t_flags *flags, unsigned int num, int j, int *co);
+void           		print_hexa_cap(t_flags *flags, unsigned int num, int j, int *co);
 void            	ft_hexa_cap(va_list *args, t_flags *flags, int *co);
-void				ft_putnbr_base_cap(long long n, int fd, int *i);
+void				ft_putnbr_base_cap(unsigned int n, int fd, int *i);
 void				ft_pointer(va_list *args, t_flags *flags, int *co);
-void         	  	print_pre_pointer(int *co, unsigned int ptrint);
+void         	  	print_pre_pointer(int *co, unsigned int ptrint, t_flags *flags);
+void               	print_null(int *co, t_flags *flags);
 
 #endif
