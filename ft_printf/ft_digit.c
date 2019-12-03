@@ -6,12 +6,12 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/30 19:09:31 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/12/02 22:12:57 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/03 16:56:15 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
+
 long long          check_type(va_list * args, t_flags *flags)
 {
     long long num;
@@ -59,15 +59,16 @@ void            ft_digit(va_list *args, t_flags *flags, int *co)
         flags->dotnum = va_arg(*args, int);
     num = check_type(args, flags);
     if (flags->space && num >= 0)
+    {
         ft_putchar(' ');
+        (*co)++;
+    }
     save_num = num;
     while (save_num / 10)
     {
         save_num = save_num / 10;
         j++;
     }
-    //if (num < 0)
-    //    j--;
     if (flags->dot == 0 && flags->zero == '0')
         print_sign(num, flags);
     print_digit(flags, num, j, co);
@@ -77,7 +78,9 @@ void            print_digit(t_flags *flags, long long num, int j, int *co)
 {
     int i;
     int k;
+    int p;
 
+    p = 0;
     k = 0;
     i = 0;
     if (num < 0 || flags->plus == 1)
@@ -96,14 +99,14 @@ void            print_digit(t_flags *flags, long long num, int j, int *co)
         k++;
         i++;
     }
-    //printf("dotnum: %d\n", flags->dotnum);
-    if (flags->dotnum != 0 || flags->num != 0 || num != 0)
+    if (!(flags->dotnum == 0 && flags->dot == 1 && num == 0))
         ft_putnbr_fd(num, 1, &i);
     if (flags->minus == 1)
-        while (i < flags->num)
+        while (i < flags->num && p < (flags->num - flags->dotnum))
         {
             ft_putchar(' ');
             i++;
+            p++;
         }
     (*co) = (*co) + i;
 }

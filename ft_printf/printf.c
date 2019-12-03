@@ -6,7 +6,7 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 15:31:42 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/12/02 22:21:33 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/03 17:06:34 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,52 @@ int 		ft_printf(const char *s, ...)
     return (co);
 }
 
-/* 
-       
-int				main(void)
+/* int				main(void)
 {
-    ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
-    printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
-	ft_printf("taaa %100s\n", "hello");
-	printf("taaa %100s\n", "hello");
-} */
+    ft_printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0);
+    printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0);
+    
+    ft_printf("st118 %*d\n", 17, 0);
+    printf("st118 %*d\n", 17, 0);
+    ft_printf("%*d        %*i\n", 1, 0, 10, 10);
+    printf("%*d        %*i\n", 1, 0, 10, 10);
+    ft_printf("neg7 %*.*d\n", -25, 15, 0);
+    printf("neg7 %*.*d\n", -25, 15, 0);
+ 
+    ft_printf("%x\n", 0);
+    printf("%x\n", 0);
+    ft_printf("%01hhX !!\n", (unsigned char)0);
+    printf("%01hhX !!\n", (unsigned char)0);
+    
+    ft_printf("%#0012x\n", 0xe);
+    printf("%#0012x\n", 0xe);
+    ft_printf("%#10.0x %0#x\n", 12345, 0); 
+    printf("%#10.0x %0ls#x\n", 12345, 0); 
+    ft_printf("%0#10.0X\n", 16);
+    printf("%0#10.0X\n", 16);
+
+    ft_printf("%---10.0xet\n", 0xaabb);
+    printf("%---10.0xet\n", 0xaabb);
+     printf("----\n");
+    printf("----\n");
+    printf("----\n");
+
+    ft_printf("toto %0#0.4X    %#4.2xet c'est fini \n", 0x037a, 0x9e);
+    printf("toto %0#0.4X    %#4.2xet c'est fini \n", 0x037a, 0x9e);
+
+    printf("%d\n", printf("t %#7.5X%0006.2x et %lX!\n", 0xab, 0x876, 0xff11ff11ff1));
+    printf("%d\n", ft_printf("t %#7.5X%0006.2x et %lX!\n", 0xab, 0x876, 0xff11ff11ff1));
+    printf("%d\n", printf("toto %0##0.4X%#4.2xet c'est fini \n", 0x037a, 0x9e));
+    printf("%d\n", ft_printf("toto %0##0.4X%#4.2xet c'est fini \n", 0x037a, 0x9e));
+    printf("%d\n", printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
+    printf("%d\n", ft_printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
+
+    ft_printf("%#10x\n", 0x78aa);
+    printf("%#10x\n", 0x78aa);
+    
+    printf("%d\n", ft_printf("%-3u\n", 194));
+    printf("%d\n", printf("%-3u\n", 194));
+
+    ft_printf("%llu\n", (unsigned long long)345612220);
+    printf("%llu\n", (unsigned long long)345612220);
+}  */

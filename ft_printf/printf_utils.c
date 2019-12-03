@@ -6,7 +6,7 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/27 14:39:13 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/12/02 22:00:31 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/03 15:07:46 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_flags         ft_flags(void)
     flags.dot = 0;
     flags.star = 0;
     flags.hash = 0;
-    flags.dotnum = -1;
+    flags.dotnum = 0;
     flags.stardot = 0;
     return (flags); 
 }
