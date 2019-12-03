@@ -35,8 +35,6 @@ void	ft_putnbr_base(unsigned long long n, int fd, int *i)
 	unsigned int k;
 
 	k = 10;
-	if (n < 0)
-		n = n * -1;
 	if (n < 16)
 	{
 		if (n > 9)
@@ -61,8 +59,6 @@ void	ft_putnbr_base_cap(unsigned long long n, int fd, int *i)
 	unsigned int k;
 
 	k = 10;
-	if (n < 0)
-		n = n * -1;
 	if (n < 16)
 	{
 		if (n > 9)

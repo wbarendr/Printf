@@ -50,7 +50,7 @@ void            ft_unsigned(va_list *args, t_flags *flags, int *co)
     if (flags->stardot == 1)
         flags->dotnum = va_arg(*args, int);
     num = check_type_unsigned(args, flags);
-     if (flags->space && num >= 0)
+     if (flags->space)
     {
         ft_putchar(' ');
         (*co)++;

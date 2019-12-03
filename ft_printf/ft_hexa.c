@@ -57,7 +57,7 @@ void            ft_hexa(va_list *args, t_flags *flags, int *co)
     if (flags->stardot == 1)
         flags->dotnum = va_arg(*args, int);
     num = check_type_hexa(args, flags);
-    if (flags->space && num >= 0)
+    if (flags->space)
     {
         ft_putchar(' ');
         (*co)++;
@@ -68,10 +68,8 @@ void            ft_hexa(va_list *args, t_flags *flags, int *co)
         save_num = save_num / 16;
         j++;
     }
-    if (num >= 0 && flags->plus == 1)
+    if (flags->plus == 1)
         ft_putchar('+');
-    if (num < 0)
-        ft_putchar('-');
     print_hexa(flags, num, j, co);
 }
 
@@ -84,11 +82,11 @@ void            print_hexa(t_flags *flags, unsigned long long num, int j, int *c
     p = 0;
 	k = 0;
     i = 0;
-    if (num < 0 || flags->plus == 1)
+    if (flags->plus == 1)
         i++;
-    if (flags->hash == 1 && num > 0)
+    if (flags->hash == 1)
         i = i + 2;
-    if (flags->hash == 1 && num > 0 && flags->zero == '0')
+    if (flags->hash == 1 && flags->zero == '0')
     {
         ft_putchar('0');
         ft_putchar('x');
@@ -99,7 +97,7 @@ void            print_hexa(t_flags *flags, unsigned long long num, int j, int *c
             write(1, &flags->zero, 1);
             i++;
         }
-    if (flags->hash == 1 && num > 0 && flags->zero == ' ')
+    if (flags->hash == 1 && flags->zero == ' ')
     {
         ft_putchar('0');
         ft_putchar('x');
