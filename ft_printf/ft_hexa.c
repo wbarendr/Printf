@@ -6,115 +6,107 @@
 /*   By: wbarendr <wbarendr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/03 15:01:58 by wbarendr       #+#    #+#                */
-/*   Updated: 2019/12/03 16:57:11 by wbarendr      ########   odam.nl         */
+/*   Updated: 2019/12/04 20:19:36 by wbarendr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
 
-unsigned long long          check_type_hexa(va_list * args, t_flags *flags)
+unsigned long long	check_type_hexa(va_list *args, t_flags *flags)
 {
-    unsigned long long num;
-    short num2;
-    unsigned short num3;
+	unsigned long			num;
+	unsigned long long		num1;
+	unsigned short			num2;
+	short					num3;
 
-    if (flags->h == 1)
-    {
-        num2 = va_arg(*args, unsigned int);
-        return (num2);
-    }
-    if (flags->hh == 1)
-    {
-        num3 = va_arg(*args, unsigned int);
-        return (num3);
-    }
-    if (flags->l == 1)
-        num = va_arg(*args, unsigned long);
-    else if (flags->ll == 1)
-       num = va_arg(*args, unsigned long long);
-    else
-        num = va_arg(*args, unsigned int);
-    return (num);
+	if (flags->hh == 1)
+	{
+		num3 = va_arg(*args, unsigned int);
+		return (num3);
+	}
+	if (flags->h == 1)
+	{
+		num2 = va_arg(*args, unsigned int);
+		return (num2);
+	}
+	if (flags->l == 1)
+	{
+		num = va_arg(*args, unsigned long);
+		return (num);
+	}
+	else if (flags->ll == 1)
+		num1 = va_arg(*args, unsigned long long);
+	else
+		num1 = va_arg(*args, unsigned int);
+	return (num1);
 }
 
-void            ft_hexa(va_list *args, t_flags *flags, int *co)
+void				eh(t_flags *flags, unsigned long long n, int *co, int i)
 {
-    unsigned long long      num;
-    unsigned long long      save_num;
-    int                     j;
+	int p;
 
-    j = 1;
-    if (flags->star == 1)
-    {
-        flags->num = va_arg(*args, int);
-        if (flags->num < 0)
-        {
-            flags->minus = 1;
-            flags->num = flags->num * -1;
-        }
-    }
-    if (flags->stardot == 1)
-        flags->dotnum = va_arg(*args, int);
-    num = check_type_hexa(args, flags);
-    if (flags->space)
-    {
-        ft_putchar(' ');
-        (*co)++;
-    }
-    save_num = num;
-    while (save_num / 16)
-    {
-        save_num = save_num / 16;
-        j++;
-    }
-    if (flags->plus == 1)
-        ft_putchar('+');
-    print_hexa(flags, num, j, co);
+	p = 0;
+	if (!(flags->dotnum == 0 && flags->dot == 1 && n == 0))
+		ft_putnbr_base(n, 1, &i);
+	if (flags->minus == 1)
+		while (i < flags->num && p < (flags->num - flags->dotnum))
+		{
+			ft_putchar(' ');
+			i++;
+			p++;
+		}
+	(*co) = (*co) + i;
 }
 
-void            print_hexa(t_flags *flags, unsigned long long num, int j, int *co)
+void				ph(t_flags *flags, unsigned long long num, int j, int *co)
 {
-    int i;
+	int i;
 	int k;
-    int p;
+	int p;
 
-    p = 0;
+	p = 0;
 	k = 0;
-    i = 0;
-    if (flags->plus == 1)
-        i++;
-    if (flags->hash == 1)
-        i = i + 2;
-    if (flags->hash == 1 && flags->zero == '0')
-    {
-        ft_putchar('0');
-        ft_putchar('x');
-    }   
-    if (flags->minus == 0)
-        while (i < (flags->num - j) && i < (flags->num - flags->dotnum))
-        {
-            write(1, &flags->zero, 1);
-            i++;
-        }
-    if (flags->hash == 1 && flags->zero == ' ')
-    {
-        ft_putchar('0');
-        ft_putchar('x');
-    }   
-    while (k < flags->dotnum - j)
-    {
-        ft_putchar('0');
-        k++;
-    }
-	 if (!(flags->dotnum == 0 && flags->dot == 1 && num == 0))
-    	ft_putnbr_base(num, 1, &i);
-    if (flags->minus == 1)
-        while (i < flags->num && p < (flags->num - flags->dotnum))
-        {
-            ft_putchar(' ');
-            i++;
-            p++;
-        }
-    (*co) = (*co) + i + k;
+	i = 0;
+	if (flags->plus == 1)
+		i++;
+	if (flags->hash == 1 && num != 0)
+		i = i + 2;
+	if (flags->hash == 1 && flags->zero == '0' && num != 0)
+		ft_putstr("0x");
+	if (flags->minus == 0)
+		no_minus(flags, &i, j, num);
+	if (flags->hash == 1 && flags->zero == ' ' && num != 0)
+		ft_putstr("0x");
+	while (k < flags->dotnum - j)
+	{
+		ft_putchar('0');
+		k++;
+		i++;
+	}
+	eh(flags, num, co, i);
+}
+
+void				ft_hexa(va_list *args, t_flags *flags, int *co)
+{
+	unsigned long long		num;
+	unsigned long long		save_num;
+	int						j;
+
+	j = 1;
+	num = check_type_hexa(args, flags);
+	if (flags->space && flags->plus == 0)
+	{
+		ft_putchar(' ');
+		(*co)++;
+		flags->num--;
+	}
+	save_num = num;
+	while (save_num / 16)
+	{
+		save_num = save_num / 16;
+		j++;
+	}
+	if (flags->plus == 1)
+		ft_putchar('+');
+	ph(flags, num, j, co);
 }
